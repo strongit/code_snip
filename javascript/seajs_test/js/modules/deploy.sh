@@ -1,1 +1,0 @@
-spm deploy --local=../
