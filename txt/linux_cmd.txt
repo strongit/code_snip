@@ -1,0 +1,528 @@
+cat /etc/issue 查看发行版本
+cat /proc/version 查看内核版本
+uname -r 查看内核版本
+grep "model name" /proc/cpuinfo 查看CPU信息
+cat /proc/cpuinfo CPU具体信息
+grep MemTotal /proc/meminfo 查看物理内存总数
+free 查看内存使用情况
+getconf LONG_BIT 查看系统位数
+ifconfig 查看IP配置
+cat /etc/resolv.conf 查看DNS配置
+/etc/rc.d/init.d/mysqld start 启动mysql
+pscp -r -sftp -l  username -pw passwd 10.11.44.11:/data/putty "C:\data\My Documents\ftp" 把服务器的文件复制到本地
+
+iptables -A INPUT -p tcp --dport 8000 -j ACCEPT 打开8000端口
+service iptables start 启动iptabls服务
+rm -rf temp 强制递归删除temp文件夹
+wget http://baidu.com/ -O baidu.txt 下载并重命名
+unzip xxx.zip -d . 解压到当前目录
+cp -r ./* ../ 拷贝当前目录下所有文件及文件夹到付目录
+ps -ef | grep python 查看python相关的进程
+py ./manage.py runfcgi host=127.0.0.1 port=7718 指定端口启动django程序G
+lsof -Pnl +M -i4 查看正在监听的IPV4端口
+lsof -d fid //查看描述符详情
+netstat -tnpl 查看正在监听的TCP端口
+/usr/local/nginx/sbin/nginx -s  reload 重新加载nginx配置文件
+/usr/local/nginx/sbin/nginx -s reopen 重启
+/usr/local/nginx/sbin/nginx -t 测试nginx配置文件
+/usr/local/nginx/sbin/nginx -s quit 关闭nginx
+ps|grep manage.py|grep -v grep|cut -c 9-15|xargs kill -9 杀掉包含manage.py的所有进程
+ln -s /var/www www 在本地建立快捷方式
+PATH=$PATH:$HOME/bin 追加环境变量
+ps -A -o rss,vsz,command|grep manage | \
+     awk '{rss += $1; vsz += $2 } END { print "Real: ",rss, "Virtual: ",vsz }'
+以上命令查看某进程的物理内存和虚拟内存使用量
+chmod +x date 增加执行权限
+netstat -anp|grep ESTABLISHED 查看活动的连接
+tcpdump -A -s0 host www.baidu.co 抓百度的http的包
+tcpdump -A -s0 -i eth1 host 10.184.127.17 and port 8083
+screen -dmS zhuabao 创建一个抓包的终端会话
+screen -ls 查看所有的会话列表，在会话里exit是结束当前会话
+在会话里按ctrl+a，然后按d是离开该会话，可用screen -r zhuabao来重新回到会话，状态不丢失
+在会话里按ctrl+a,然后按z是让该会话后台执行，在shell里输入fd恢复
+tar -zxvf /tmp/etc.tar.gz 
+pkill -kill -t pts/1 踢掉另一个人
+git init 初始化一个git本地仓库
+git add . 添加到索引
+git commit -m  "改动说明" -a -a参数表示扫描所有修改和删除的改动
+git config --global user.name "huhao" 设置Git用户
+git config --global user.email "huhao@dnspod.com" 设置Git邮件
+echo "*.pyc" > .gitignore 设置所有的.pyc文件不提交更新
+git clone test.git test-copy 把test.git仓库指向的文件克隆岛test-copy子目录
+git log --stat --summary 查看提交历史
+git branch wawa 创建新分支
+git checkout wawa 切换到新分支上
+git branch 查看所有分支
+git branch -D wawa 删除某分支，需要先切换到另一个分支
+git status 查看现在有的未提交更改
+git rm *.pyc 在仓库里去掉所有的pyc文件
+git remote add origin git@github.com:你的github用户名/你的github项目名.git
+git push origin master
+pstree -H pid 查看进程树
+ssh-keygen -t rsa 生成密钥对
+ssh-keygen -t dsa -b1024
+unlink xxx 删除软连接
+jobs 查看正在运行的后台作业
+"nohup ping www.baidu.com >ping.out 2>&1 & "把任务放于后台且注销后不关闭，标准输出重定向到ping.out文件，但父进程还是本终端
+"setsid ping www.baidu.com >ping.out" 把任务单独执行，脱离本终端执行，父进程是1
+"(ping www.baidu.com >ping.out &)" 把任务在子Shell的后台运行，ps -ef|grep ping得到pid后kill，用jobs看不到
+ctrl+z是把当前任务挂起，fg是回复到前台，bg是把挂起任务到后台继续执行
+jobs 查看作业 %1是把id为1的job搞到前台运行，等同于fg 1
+disown -h %1 让ID为1的作业忽略hup信号，就是退出终端后继续运行
+ps -e 显示所有进程 -a是现实拥有终端的进程 -x是无终端的进程 -f是显示详细信息
+/etc/init.d/crond restart 重启计划任务，重新加载配置。配置文件在/etc/crontab
+chkconfig --levels 35 crond on 让crond开机自动启动
+chmod 0600 /root/.ssh/id_rsa 防止git时私钥无法读取
+/sbin/chkconfig --list | grep on 查看开机执行的脚本
+ iconv -f gbk -t utf8 984通讯录.txt >xxx.txt
+find . -name "*py*" 查找当前目录下带py的文件
+git diff //比较当前目录和索引的变化
+git diff --cached //比较索引和代码仓库的变化
+git diff --HEAD //比较当前目录和代码仓库的变化
+
+启动一个python服务：
+setsid python myapp.py 1>myapp.log 2>&1 &
+echo $! > /tmp/myapp.pid
+停止一个python服务：
+kill `cat /tmp/myapp.pid`
+查看运行日志
+tail -f myapp.log
+
+pip安装MySQLdb
+Install dependencies
+sudo apt-get build-dep python-mysqldb
+Install MySQLdb with pip/virtualenv
+cd ~/lib/python-environments
+virtualenv --distribute --no-site-packages default
+pip install -E default/ MySQL-python
+
+virtualbox 安装扩展工具
+mkdir /media/cdrom
+mount -r /dev/cdrom /media/cdrom
+cd /media/cdrom/
+
+rpm -qa | grep zlib-devel 查看某包是否安装
+
+Linux Shell编程入门
+http://www.cnblogs.com/suyang/archive/2008/05/18/1201990.html
+
+# 得到字符串的长度 
+str="hello" 
+echo ${str} | wc -L
+less -N xxx //显示行号
+
+
+ifconfig eth0:1 172.0.0.1
+scp -r ~/.ssh/ root@10.96.60.87:~/ 把本地文件拷贝到服务器
+
+//执行语句并输出
+mysql -h172.0.0.1 -uroot -p MYDB -BNe "select * from dns_serverPro where Service_providers like 'dns.%'" >  out.txt
+//执行语句
+mysql -uroot mydb < xxx.sql
+
+修改时区
+mv /etc/localtime /etc/localtime.bk 
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ntpdate time.asia.apple.com //同步时间
+grep -c SERVFAIL zy8000.com //查询包含SERVFAIL的行数
+strace -p pid //查看某进程的系统调用情况
+df -h //查看剩余空间
+du -sh /* 查看根目录下各目录大小
+ls -lah log /查看log目录下各文件大小
+file /usr/local/mongodb/bin/mongo
+db.createCollection('monitor_history',{capped:true,size:2*1000*1000*1000}) //mongodb创建固定大小的collection
+db.runCommand({"convertToCapped": "mycoll", size: 100000});
+tcpdump tcp port 23 and host 210.27.48.1 -n
+
+useradd mongo
+passwd mongo 
+ls /data/db/ -l
+chown mongo -R /data/db/
+ls /var/log/mongod.log -l
+chown mongo /var/log/mongod.log
+su mongo
+ulimit -v 500000 #限制只是用500M内存
+curl http://180.150.162.29/ -H "host: www.kibosoft.com" -vI  //指定IP，HOST显示http应答头
+netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+python test.py | sort -n //把输出按第一列的数字序排序
+python test.py | wc -l //统计输出的行数
+
+net.ipv4.tcp_max_syn_backlog=2048
+net.ipv4.tcp_syncookies=1
+net.ipv4.tcp_synack_retries=3
+net.ipv4.tcp_syn_retries=3
+
+修改机器名
+vim /etc/hosts
+127.0.0.1       url1.stage.xxx.net url1 localhost.localdomain localhost
+
+hostname url1
+
+vim /etc/sysconfig/network
+3 HOSTNAME=url1.stage.weisuo.net
+
+exit
+
+重启输入法
+ps -aux | grep ibus
+kill -9 1460
+ibus-daemon -d
+
+自动登录远程机器
+vi ~/.ssh/config
+Host wt
+User root
+
+ssh-copy-id wt
+
+A向B推送代码
+b:
+mkdir code
+cd code
+git init
+vim .git/config增加如下行
+[receive]
+    denyCurrentBranch = warn
+a:
+vim .git/config 增加如下行
+[remote "b"]
+     fetch = +refs/heads/*:refs/remotes/origin/*
+     url = ssh://root@1.1.1.1:22/~/code
+
+git push b master --force
+
+b:
+git checkout master
+
+vim编辑shell脚本，推荐:colorscheme pablo，否则变量都是蓝色的，黑底蓝字看的眼睛快瞎了有木有
+
+
+git clone ssh://user@domain.com:3022/~/Projects/my_project
+
+watch -d ls -h xxx //查看xxx文件的大小变化
+
+git diff -u aaa aaa.bak 查看两个文件的变化
+
+Git diff 比较不同版本的差异 — 三人行 http://t.cn/SxVxTJ 
+git diff ffd98b291e0caa6c33575c1ef465eae661ce40c9:filename b8e7b00c02b95b320f14b625663fdecf2d63e74c:filename 查看某两个版本的某个文件之间的差异
+
+ env GIT_SSL_NO_VERIFY=true git clone https://github.com/seajs/seajs.git 忽略证书
+curl --connect-timeout 10 -m 20 "http://www.ninthday.net"
+tcpdump port 80 -c 50000 -w netdump.cap 抓5000个包到指定目录
+tar -zcvf /tmp/etc.tar.gz /etc <==打包后，以 gzip 压缩
+ip.dst eq 122.70.188.81 or ip.src eq 122.70.188.81
+
+git cat-file -p HEAD | head -n 1 | cut -b6-15 | xargs git cat-file -p //当看当前版本所包含的blob:
+git ls-files --stage //查看当前暂存
+egrep -v '^[0-9\.]+(#+|\*+)$' retry_result.txt | wc -l //过滤掉前面一个IP跟着一堆*或跟着一堆#的结果
+
+pip install pyzmq --install-option="--zmq=/usr/local" 
+
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+curl http://115.238.185.99/ -H "host: uc.nmenu.cn" --connect-timeout 10 -m 20 -vI
+
+putty设置
+1、window\appearance\font setting:consolas 12pt 
+2、window\translate\charset:utf-8 
+3、window\selection\action of mouse buttons:windows .. 
+4、window\line of scoreback:20000 
+5、connection\auto-login username:root 
+6、connection\seconds of keepalive:10
+
+putty ssl登录：
+1、ssh-keygen -t rsa 生成密钥对，
+2、把私钥id_isa下载到用scp下载到windows并用puttygen加载并重新保存私钥。
+3、新建快捷方式输入E:\soft\putty.exe -i D:\ssh\wawa.ppk -load "(默认)172.3.11.171" 其中-i指定私钥位置，-d指定会话名称，这样机能无密码登录，又能保存putty设置，帅
+
+alias prettyjson="python -c 'import os, sys, json, pygments; from pygments.lexers import JavascriptLexer as lexer; from pygments.formatters.terminal256 import Terminal256Formatter;from pygments.formatters.terminal import TerminalFormatter; fmt = (Terminal256Formatter if \"256color\" in os.environ.get(\"TERM\", \"\") else TerminalFormatter); from httpie import solarized; content = json.dumps(json.loads(sys.argv[1]), indent=4, sort_keys=True); print pygments.highlight(content, lexer(), fmt(style=solarized.SolarizedStyle));'"
+alias prettyjson="python -c 'import sys, json; print json.dumps(eval(sys.argv[1]), indent=4, sort_keys=True);'"
+
+PS1='`a=$?;if [ $a -ne 0 ]; then echo -n -e "\[\e[01;32;41m\]{$a}"; fi`\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w`b=$(git symbolic-ref HEAD 2> /dev/null | cut -b 12-); [[ "$b" != "" ]] && echo -n -e "\[\e[33;00m\]($b)\[\033[01;32m\]\[\e[00m\]"`\[\033[01;34m\] $ \[\e[00m\]'
+
+[Linux 存储备份恢复] iostat来对linux硬盘IO性能进行了解
+http://www.php-oa.com/2009/02/03/iostat.html
+$iostat -x 1
+$iostat -x 1
+Linux 2.6.33-fukai (fukai-laptop)          _i686_    (2 CPU)
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           5.47    0.50    8.96   48.26    0.00   36.82
+ 
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sda               6.00   273.00   99.00    7.00  2240.00  2240.00    42.26     1.12   10.57   7.96  84.40
+sdb               0.00     4.00    0.00  350.00     0.00  2068.00     5.91     0.55    1.58   0.54  18.80
+
+如果 %util 接近 100%,说明产生的I/O请求太多,I/O系统已经满负荷,该磁盘可能存在瓶颈. 
+idle小于70% IO压力就较大了,一般读取速度有较多的wait.
+同时可以结合vmstat 查看查看b参数(等待资源的进程数)和wa参数(IO等待所占用的CPU时间的百分比,高过30%时IO压力高)
+另外 await 的参数也要多和 svctm 来参考.差的过高就一定有 IO 的问题.
+
+top -p 2234 //只查看某进程的信息
+
+Linux命令----分析内存的瓶颈
+http://space.itpub.net/8554499/viewspace-580301
+[root@localhost ~]# vmstat -n 3       (每个3秒刷新一次）
+procs-----------memory--------------------swap------io---- --system---- ------cpu--------
+r   b    swpd   free       buff       cache       si   so    bi    bo   in      cs        us   sy   id   wa
+1  0   144 186164 105252 2386848    0    0     18   166  83     2          48   21  31  0
+2  0   144 189620 105252 2386848    0    0      0   177  1039 1210   34   10  56   0
+0  0   144 214324 105252 2386848    0    0      0    10   1071   670    32   5    63   0
+0  0   144 202212 105252 2386848    0    0      0   189   1035   558   20   3    77   0
+2  0   144 158772 105252 2386848    0    0      0   203  1065 2832    70  14  15   0
+
+MEMORY
+-swap:切换到交换内存上的内存（默认以KB为单位）
+如果SWAP的值不为0，或者还比较大，比如超过100M了，但是SI，SO的值长期为0，这种情况我们可以不用担心，不会影响系统性能。
+
+-free:空闲的物理内存
+- buff:作为buffer cache的内存，对块设备的读写进行缓冲
+-cache：作为page cache的内存，文件系统的cache
+如果cache的值大的时候，说明cache处的文件数多，如果频繁访问到的文件都能被cache处，那么磁盘的读IO bi会非常小。
+SWAP
+-si:交换内存使用，由磁盘调入内存
+-so:交换内存使用，由内存调入磁盘
+内存够用的时候，这2个值都是0，如果这2个值长期大于0时，系统性能会受到影响，磁盘IO和CPU资源都会被消耗。
+我发现有些朋友看到空闲内存（FREE）很少的或接近于0时，就认为内存不够用了，实际上不能光看这一点，Linux是抢占内存式的OS，还要结合si,so，如果free很少，但是si,so也很少（大多时候是0），那么不用担心，系统性能这时不会受到影响的。
+
+top -p $(pidof mongod)
+
+shell> mongostat
+mapped  vsize    res faults
+  940g  1893g  21.9g      0
+  940g  1893g  21.9g      0
+  940g  1893g  21.9g      0
+  940g  1893g  21.9g      0
+  940g  1893g  21.9g      0
+其中内存相关字段的含义是：
+mapped：映射到内存的数据大小
+visze：占用的虚拟内存大小
+res：实际使用的内存大小
+
+mongo monitor_center m.js --quiet
+
+git branch -r 查看所有分支，包括远程分支
+git checkout -b v2-1 origin/v2-1 签出远程分支
+
+分支间切换
+(master) $ git stash save master //暂存当前未提交工作
+Saved working directory and index state On master: master
+HEAD is now at 57d83c6 Merge branch 'master' of scm.office.weisuo.net:git
+
+(master) $ git stash list //查看是否暂存成功
+stash@{0}: On master: master
+
+(master) $ git checkout v2-1 //切换到其它分支
+Switched to branch 'v2-1'
+
+(v2-1) $ vi monitorv2/monitorpointv2/config.py //编辑文件，未提交
+
+(v2-1) $ git stash save v2-1 //暂存当前未提交工作
+Saved working directory and index state On v2-1: v2-1
+HEAD is now at 6ca845c readme
+
+(v2-1) $ git stash list //查看是否暂存成功
+stash@{0}: On v2-1: v2-1
+stash@{1}: On master: master
+
+(v2-1) $ git checkout master //切换到master分支
+Switched to branch 'master'
+
+(master) $ git stash list //查看现有暂存列表
+stash@{0}: On v2-1: v2-1
+stash@{1}: On master: master
+
+(master) $ git stash pop stash@{1} //明确指定编号的暂存数据，恢复master的工作。
+
+(master) $ git stash list //查看暂存列表中是否去掉了master的暂存
+stash@{0}: On v2-1: v2-1
+
+(master) $ git status  //确认master工作恢复到当时状态
+
+cat remove_domains.sql | sqlite3 monitor_point.db
+
+/usr/local/mongodb/bin/mongoexport -h 10.133.42.109 -d monitor_center -c down_event -o temp
+
+call pathogen#infect()
+
+db.status_change.find({notify_time:{ $gte: new Date(new Date() - 60000)}}).count()
+
+time http POST 112.90.85.200/gethistory monitor_id=b8dc8890-402e-11e1-9301-0819a6248970
+
+gunicorn -w 4 history_webserver:application -D -b 10.133.42.109:8082
+
+find /archive -name 'backup-*' -mtime +30 | xargs rm -f #把30天前的数据删除
+tar -zxvf squid-2.6.STABLE9.tgz share/examples/squid/squid.conf 只解压某个文件
+
+寻找本目录下最大的前10个文件
+
+不统计目录
+find ./ -type f -exec du {} \; |sort -rn | head -10 #院长版，单位合并后排序不太准了
+find ./ -type f -printf '%s %p\n' | sort -nr | head -n 10 #网上版，执行最快
+find . -type f -exec stat -c "%s %n" {} \;|sort -nr|head -10 #新歌版
+
+统计目录
+du -a * | sort -nr | head -10 | cat -n # 姜哥版
+du -h --max-depth=1 #新歌版
+du -s * | sort -nr | head -10 | cat -n | sed G #网上版
+
+git push origin huhao #新建远程分支
+git push origin :huhao #删除远程分支
+git rebase -i HEAD~4 #删除多次提交
+(master)$:git merge --squash dev ; git commit #把dev合并到master,但日志里不显示dev的一些小改动
+git log --first-parent 只查看非分支合并的日志
+git log --graph
+curl -o /dev/null -m 5 -s -w %{http_code},%{time_namelookup},%{size_do},%{time_starttransfer},%{time_total} dm.kuaibo.com
+tcpdump -A -s0 udp and host 119.180.24.196
+
+mysqladmin -u root -password password
+
+netstat -tn |grep :27017|awk '{print $5}'|awk -F: '{print $1}'|sort|uniq -c |sort -n|grep -v Address|grep -v servers 统计本机某端口上的连接数
+
+grep "2013-01-05 10:30" temp | sed -nr "s/.*u'host': u'(.*)', u'points'.*/\1/p" Grep只输出正则的某个分组
+sed -nr "s/2013-01-05 10:30.*u'host': u'(.*)', u'points'.*/\1/p" temp
+python group.py -f dnspod.access.log -r "(\d{2}/\w{3}/\d{4}:\d{2}:\d{2}).*/Api/Monitor.Modify" //nginx 日志统计
+
+常用命令要深入学习一下：diff, patch, grep, sed, awk, cat, chomd,chkconfig
+
+cmake \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+-DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
+-DENABLED_PROFILING=OFF \
+-DENABLE_DEBUG_SYNC=OFF \
+-DMYSQL_DATADIR=/data/mysql/data \
+-DMYSQL_MAINTAINER_MODE=OFF \
+-DWITH_DEBUG=OFF \
+-DWITH_EMBEDDED_SERVER=OFF \
+-DWITH_EXTRA_CHARSETS=all \
+-DDEFAULT_CHARSET=utf8 \
+-DDEFAULT_COLLATION=utf8_general_ci \
+-DWITH_READLINE=ON \
+-DWITH_SSL=system \
+-DWITH_UNIT_TESTS=OFF \
+-DWITH_ZLIB=system
+
+
+/usr/local/mongodb/bin/mongoexport -h 10.133.42.109 -d monitor_center_v2 -c monitor --csv -f host,ip,monitor_id,monitor_interval,monitor_path,monitor_type,port,udatetime -o monitor.csv
+
+python <(curl -L http://t.cn/zYP7xjN 2>/dev/null) baidu.com
+
+统计git代码行数的命令
+ git log --author="onlytiancai" --pretty=tformat: --numstat | gawk '{ add += $1 ; subs += $2 ; loc += $1 - $2 } END \
+{ printf "added lines: %s removed lines : %s total lines: %s\n",add,subs,loc }' -
+
+ps -eo pid,cmd,etime | grep python //查看进程运行时间
+
+让SecureCRT好使起来
+
+SecureCRT默认设置连接linux各种不爽，linux各种命令输出没有颜色，按home键也不会到行首，复制粘贴也很复杂，进入mongodb控制台后按退格键就乱码...
+
+经过如下设置，可以让SecureCRT好用很多，像putty靠近一些。
+
+1. 先修改一些默认设置：Options -> Global ptions -> General -> Default Session -> Edit Default Settings...
+    1. 打开linux配色方案：Terminal -> Emulation 中Terminal选择ANSI or linux or xterm,必须钩上 ANSI Colour
+    1. 启用常用的快捷键设置，：Terminal -> Emulation中Select an alternate keyboard emulation中选择linux
+    1. 退出主机自动关闭窗口: Terminal -> Close on disconnect Close 打勾
+    1. 屏幕显示最大行数：Terminal => Emulation => Scrollback 修改为10000。 
+    1. 使用使用Windows下的拷贝粘贴快捷键，不习惯的话不要启用： Terminal => Mapped keys => Use windows copy and paste hotkeys
+    1. 字体编码设置：Terminal->appearance: 字体选择lucida consolas 12pt， 编码选择utf-8
+1. 使用鼠标拷贝与粘贴: Options => Global ptions => Terminal => Mouse 选中Copy on select 和Paste on middle button
+
+ps aux | sort -nk +4 | tail
+列出头十个最耗内存的进程
+> file.txt
+创建一个空文件，比touch短。
+:w !sudo tee %
+在vi中保存一个只有root可以写的文件
+sudo !!
+以root的身份执行上一条命令 。
+!$
+!$是一个特殊的环境变量，它代表了上一个命令的最后一个字符串。
+tail -f /path/to/file.log | sed '/^Finished: SUCCESS$/ q'
+当file.log里出现Finished: SUCCESS时候就退出tail，这个命令用于实时监控并过滤log是否出现了某条记录。
+ssh user@server bash < /path/to/local/script.sh
+在远程机器上运行一段脚本。这条命令最大的好处就是不用把脚本拷到远程机器上。
+ssh user@host cat /path/to/remotefile | diff /path/to/localfile -
+比较一个远程文件和一个本地文件
+wget --random-wait -r -p -e robots=off -U mozilla http://www.example.com
+下载整个www.example.com网站。（注：别太过分，大部分网站都有防爬功能了：））
+vim scp://username@host//path/to/somefile
+vim一个远程文件
+history | awk '{CMD[$2]++;count++;} END { for (a in CMD )print CMD[a] " " CMD[a]/count*100 "% " a }' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n10
+(陈皓注：有点复杂了，history|awk ‘{print $2}’|awk ‘BEGIN {FS=”|”} {print $1}’|sort|uniq -c|sort -rn|head -10)
+这行脚本能输出你最常用的十条命令，由此甚至可以洞察你是一个什么类型的程序员。
+
+在bash的脚本中，你可以使用 set -x 来debug输出。使用 set -e 来当有错误发生的时候abort执行。考虑使用 set -o pipefail 来限制错误。还可以使用trap来截获信号（如截获ctrl+c）。
+在bash 脚本中，subshells (写在圆括号里的) 是一个很方便的方式来组合一些命令。一个常用的例子是临时地到另一个目录中，例如：
+
+# do something in current dir
+(cd /some/other/dir; other-command)
+# continue in original dir
+
+在 bash 中，注意那里有很多的变量展开。如：检查一个变量是否存在: ${name:?error message}。如果一个bash的脚本需要一个参数，也许就是这样一个表达式 input_file=${1:?usage: $0 input_file}。一个计算表达式： i=$(( (i + 1) % 5 ))。一个序列： {1..10}。 截断一个字符串： ${var%suffix} 和 ${var#prefix}。 示例： if var=foo.pdf, then echo ${var%.pdf}.txt prints “foo.txt”.
+
+通过 <(some command) 可以把某命令当成一个文件。示例：比较一个本地文件和远程文件 /etc/hosts： diff /etc/hosts <(ssh somehost cat /etc/hosts)
+把 HTML 转成文本： lynx -dump -stdin
+
+你还可以对你的ssh 做点优化。比如，.ssh/config 包含着一些配置：避免链接被丢弃，链接新的host时不需要确认，转发认证，以前使用压缩（如果你要使用scp传文件）：
+
+TCPKeepAlive=yes
+ServerAliveInterval=15
+ServerAliveCountMax=6
+StrictHostKeyChecking=no
+Compression=yes
+ForwardAgent=yes
+
+
+cat a b | sort | uniq > c   # c is a union b 并集
+ 
+cat a b | sort | uniq -d > c   # c is a intersect b 交集
+ 
+cat a b b | sort | uniq -u > c   # c is set difference a - b 差集
+
+# rsync使用
+rsync src/down-monitor/* /udata/down-monitor -arvuz --progress
+
+openresty 
+./configure --with-http_stub_status_module
+/usr/local/mongodb/bin/mongo 10.133.42.109/monitor_center_v2 m.js 
+
+m.js
+db.monitor
+    .find({monitor_type:{$in:['cname', 'cnames']}},
+          {_id:0, host:1, record:1, monitor_type:1, port:1, monitor_path:1, monitor_interval:1})
+    .forEach(function(row){
+        print(row.host + '\t' 
+            + row.record + '\t' 
+            + (row.monitor_type == 'cnames') + '\t' 
+            + row.monitor_path + '\t' 
+            + row.monitor_interval);
+    });
+
+openssl req -new -newkey rsa:2048 -nodes -out huhao.me.csr 
+openssl x509 -req -days 365 -in huhao.me.csr -signkey huhao.me.key -out huhao.me.crt
+env GIT_SSL_NO_VERIFY=true git clone https://github...
+
+按内存倒序排列
+ps -eo rss,pmem,pcpu,vsize,args |  sort -k 1 -r -n | head -n 10
+ps 都知道，是linux,unix显示进程信息的, -e 是显示所有进程, -o是定制显示信息的格式
+rss: resident set size, 表示进程占用RAM(内存)的大小，单位是KB
+pmem: %M, 占用内存的百分比 
+pcpu：%C，占用cpu的百分比
+vsize: 表示进程占用的虚拟内存的大小，KB
+args：进程名（command） 
+sort命令对ps结果进行排序
+-k 1 :按第一个参数 rss进行排序
+-r：逆序
+-n：numeric，按数字来排序
+
+禁止某个IP访问
+iptables -I INPUT -s x.x.x.x -m comment --comment "by wawa" -j DROP
+取消掉某规则
+iptables -D INPUT -s x.x.x.x -m comment --comment "by wawa" -j DROP
+
+shell 求平均值
+awk 'BEGIN { a=0 }; { a=a+$0 }; END { print a/NR }'
+只输出满足条件的行
+awk '{if($1<60){print $1}}' | wc -l
